@@ -2,11 +2,19 @@
 <html>
 <head>
     <title>Calculator</title>
+    <script type="text/javascript" src="./../js/helpers/helper.js"></script>
 </head>
 <body>
 <div class="js-calculator"></div>
-<script src="../js/calculator/calculator.js"></script>
-<script src="../js/display/display.js"></script>
-<script src="../js/numberpad/numberpad.js"></script>
+<script src="./../js/calculator/calculator.js"></script>
+<script src="./../js/displaypanel/displaypanel.js"></script>
+<script src="./../js/buttonpanel/buttonpanel.js"></script>
+<script type="text/javascript">
+	var calculator = new Calculator();
+	calculator.initialize({
+		'calculatorContainerClass' : 'js-calculator'
+	});
+</script>
+
 </body>
 </html>
