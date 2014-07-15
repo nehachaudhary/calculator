@@ -15,29 +15,45 @@ Calculator.prototype.initializeChildren = function (options) {
     var calculatorContainer = options.parentContainer;
 
     var displayContainerClass = 'js-display';
-    var displayContainer = createElement('div',displayContainerClass);
-    calculatorContainer.appendChild(displayContainer);
+    var displayPanelContainer = createElement('div',displayContainerClass);
+    calculatorContainer.appendChild(displayPanelContainer);
 
-    this.display = new Display();
-    this.display.initialize({
-        displayElement : displayContainer
+    this.displayPanel = new DisplayPanel();
+    this.displayPanel.initialize({
+        displayPanelElement : displayPanelContainer
     });
 
-    var numberPadContainerClass = 'js-numpad';
-    var numberPadContainer = createElement('div', numberPadContainerClass);
-    calculatorContainer.appendChild(numberPadContainer);
+    var buttonPanelContainerClass = 'js-numpad';
+    var buttonPanelContainer = createElement('div', buttonPanelContainerClass);
+    calculatorContainer.appendChild(buttonPanelContainer);
 
-    this.numberPad = new NumberPad();
-    this.numberPad.initialize({
-        numberPadElement : numberPadContainer
+    this.buttonPanel = new ButtonPanel();
+    this.buttonPanel.initialize({
+        buttonPanelElement : buttonPanelContainer
     });
+    
+    this.addEventListener();
+};
 
+Calculator.prototype.addEventListener = function(){
+	this.buttonPanel.addEventListeners('click',this.displayInput, this);
+	this.buttonPanel.addCalculateEventListener('click', this.calculate, this);
+	this.buttonPanel.addClearEventListener('click', this.resetCalculator, this);
+};
+
+Calculator.prototype.displayInput = function(event){
+	var currentNum = event.currentTarget.innerText;
+	if(isFinite(currentNum) || currentNum === '.'){
+		this.displayPanel.setNumbers(currentNum);
+	}else{
+		this.displayPanel.setExpression(event.currentTarget.innerText);
+	}
 };
 
 
 Calculator.prototype.calculate = function () {
     var operatorPrecedenceArray = ['/', '*', '+', '-'];
-    var expressionString = this.display.getExpression();
+    var expressionString = this.displayPanel.getExpression();
     var expression = expressionString.split(' ');
 
     var i = 0;
@@ -62,9 +78,12 @@ Calculator.prototype.calculate = function () {
             }
         }
     }
+    
     var evaluatedValue = isFinite(expression[0]) ? expression[0] : 'Error !';
-    this.display.setAnswer(evaluatedValue);
+    
+    this.displayPanel.setAnswer(evaluatedValue);
 };
 
-
-
+Calculator.prototype.resetCalculator = function(){
+	this.displayPanel.resteDisplayPanel();
+}
