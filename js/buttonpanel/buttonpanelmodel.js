@@ -13,6 +13,6 @@ ButtonPanelModel.prototype.initialize = function (options){
               'row4' : [9, '.']
           },
         'operators' : ['/','*','+','-'],
-        'special'   : ['Ans','Clear']
+        'special'   : ['ans','clear']
         }
 };

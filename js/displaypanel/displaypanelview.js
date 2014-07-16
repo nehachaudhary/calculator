@@ -13,6 +13,7 @@ DisplayPanelView.prototype.initialize = function (options) {
 DisplayPanelView.prototype.render = function () {
     this.defaultDisplayValue = this.options.displayPanelModel['attributes']['defaultValue'];
     this.displayPanelBand = createElement('input','js-display-band',this.defaultDisplayValue);
+    this.displayPanelBand.setAttribute('readonly', 'readonly');
     this.$el.appendChild(this.displayPanelBand);
 };
 
