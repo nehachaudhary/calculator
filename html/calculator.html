@@ -6,11 +6,18 @@
 </head>
 <body>
 <div class="js-calculator"></div>
-<script src="./../js/calculator/calculator.js"></script>
-<script src="./../js/displaypanel/displaypanel.js"></script>
-<script src="./../js/buttonpanel/buttonpanel.js"></script>
+<script src="./../js/calculator/calculatorcontroller.js"></script>
+<script src="./../js/calculator/calculatorview.js"></script>
+<script src="../js/displaypanel/displaypanelcontroller.js"></script>
+<script src="../js/displaypanel/displaypanelview.js"></script>
+<script src="../js/displaypanel/displaypanelmodel.js"></script>
+<script src="./../js/buttonpanel/buttonpanelcontroller.js"></script>
+<script src="./../js/buttonpanel/buttonpanelview.js"></script>
+<script src="./../js/buttonpanel/buttonpanelmodel.js"></script>
+
 <script type="text/javascript">
-	var calculator = new Calculator();
+	var calculator = new CalculatorController();
+    debugger;
 	calculator.initialize({
 		'calculatorContainerClass' : 'js-calculator'
 	});

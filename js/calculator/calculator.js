@@ -36,6 +36,7 @@ Calculator.prototype.initializeChildren = function (options) {
 };
 
 Calculator.prototype.addEventListener = function(){
+    // write custom events
 	this.buttonPanel.addEventListeners('click',this.displayInput, this);
 	this.buttonPanel.addCalculateEventListener('click', this.calculate, this);
 	this.buttonPanel.addClearEventListener('click', this.resetCalculator, this);
@@ -46,7 +47,7 @@ Calculator.prototype.displayInput = function(event){
 	if(isFinite(currentNum) || currentNum === '.'){
 		this.displayPanel.setNumbers(currentNum);
 	}else{
-		this.displayPanel.setExpression(event.currentTarget.innerText);
+		this.displayPanel.setValue(event.currentTarget.innerText);
 	}
 };
 
@@ -79,11 +80,11 @@ Calculator.prototype.calculate = function () {
         }
     }
     
-    var evaluatedValue = isFinite(expression[0]) ? expression[0] : 'Error !';
+    var evaluatedValue = isFinite(expression[0]) ? parseFloat(expression[0]) : 'Error !';
     
     this.displayPanel.setAnswer(evaluatedValue);
 };
 
 Calculator.prototype.resetCalculator = function(){
-	this.displayPanel.resteDisplayPanel();
+	this.displayPanel.resetDisplayPanel();
 }

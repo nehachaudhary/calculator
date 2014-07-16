@@ -47,6 +47,7 @@ ButtonPanel.prototype.addClearEventListener = function(type, handler, context){
 };
 
 
+//    get these attributes from button model and rewrite this method
 function createButtonPanelTemplate(buttonPanelElement){
 	for (var index = -1 ; index <9 ;) {
     	var div = createElement('div', 'js-number-container');
