@@ -6,13 +6,12 @@ ButtonPanelModel.prototype.initialize = function (options){
     // create button data in separate file and pass that data in options
 
     this.attributes = {
-          'numbers' : {
-              'row1' : [0, 1, 2],
-              'row2' : [3, 4, 5],
-              'row3' : [6, 7, 8],
-              'row4' : [9, '.']
-          },
+        'numbers' : {
+            'row1' : [0, 1, 2, 3],
+            'row2' : [4, 5 , 6, 7],
+            'row3' : [8, 9, '.']
+        },
         'operators' : ['/','*','+','-'],
-        'special'   : ['ans','clear']
-        }
+        'special' : ['ans', 'clear', 'back']
+    }
 };

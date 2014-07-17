@@ -4,7 +4,7 @@ function createButtonPanelTemplate(buttonPanelData){
     function createButtonPanelElements(rowDiv,data){
         containerDiv.appendChild(rowDiv);
         for(var rowIndex = 0; rowIndex < data.length; rowIndex++){
-            var element = createElement('button', 'js-input-key', data[rowIndex]);
+            var element = createElement('button', 'js-input-key theme-button', data[rowIndex]);
             rowDiv.appendChild(element);
         }
     }
@@ -28,7 +28,7 @@ function createButtonPanelTemplate(buttonPanelData){
                 containerDiv.appendChild(rowDiv);
                 var specialKeys = buttonPanelData[key];
                 for(var i = 0; i < specialKeys.length; i++){
-                    var element = createElement('button', 'js-' + specialKeys[i] + '-key', specialKeys[i]);
+                    var element = createElement('button', 'js-' + specialKeys[i] + '-key theme-button', specialKeys[i]);
                     rowDiv.appendChild(element);
                 }
             }
@@ -55,11 +55,11 @@ ButtonPanelView.prototype.render = function(){
 };
 
 ButtonPanelView.prototype.addEventListener = function(eventType,handler, context){
-	debugger;
+    debugger;
     function onClickHandler(event) {
         handler.call(context, event || window.event);
     }
-    
+
     if(typeof eventType === 'string'){
         if(eventType === 'numbersOperatorsClicked'){
             var elements = /*this.$el.querySelectorAll*/document.getElementsByClassName('js-input-key');
@@ -72,7 +72,11 @@ ButtonPanelView.prototype.addEventListener = function(eventType,handler, context
         }else if(eventType === 'clearKeyClicked'){
             var element = /*this.$el.querySelector*/document.getElementsByClassName('js-clear-key')[0];
             element.addEventListener('click', onClickHandler, false);
+        }else if(eventType === 'backKeyClicked'){
+            var element = /*this.$el.querySelector*/document.getElementsByClassName('js-back-key')[0];
+            element.addEventListener('click', onClickHandler, false);
         }
     }
 
 };
+

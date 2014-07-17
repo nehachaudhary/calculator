@@ -8,6 +8,10 @@ CalculatorController.prototype.initialize = function (options) {
         'buttonPanelClass'  : 'js-button-panel'
     });
 
+    this.calculatorModel = new CalculatorModel({
+        'calculatorType' : 'basic'
+    });
+
     this.initializePanels();
     this.addEventListener();
 };
@@ -17,6 +21,7 @@ CalculatorController.prototype.initializePanels = function() {
     this.displayPanel.initialize({
         el: document.getElementsByClassName('js-display-panel')[0]
     });
+    this.displayPanel.setValue(0);
 
     this.buttonPanel = new ButtonPanelController();
     this.buttonPanel.initialize({
@@ -28,6 +33,7 @@ CalculatorController.prototype.addEventListener = function(){
     this.buttonPanel.addEventListener('numbersOperatorsClicked', this.setValue, this);
     this.buttonPanel.addEventListener('answerKeyClicked', this.calculate, this);
     this.buttonPanel.addEventListener('clearKeyClicked', this.resetDisplay, this);
+    this.buttonPanel.addEventListener('backKeyClicked', this.editValue, this);
 };
 
 CalculatorController.prototype.resetDisplay= function () {
@@ -76,23 +82,26 @@ CalculatorController.prototype.setValue = function (event) {
         this.value = keyClickedValue;
     }else{
         if(isFinite(keyClickedValue)){
-            if (this.value === '0') {
+            if (this.value === '0' || this.value === 'Error !') {
                 this.value = keyClickedValue;
-            } else if (this.value === 'Error !') {
-                this.value = keyClickedValue;
-            }/* else if (this.displayPanelBand.getAttribute('data-isAnswer')) {
-             this.displayPanelBand.removeAttribute('data-isAnswer');
-             this.value = keyClickedValue;
-             }*/ else {
+            } else {
                 this.value += keyClickedValue;
             }
         }else{
-            if (keyClickedValue !== undefined && keyClickedValue !== '.') {
-            	// write again..considering no opperator should come after opperator except -
-            	if(keyClickedValue === '-' && this.value.lastIndexOf(' ') !== -1 && this.value.lastIndexOf(' ') === this.value.length-1){
-            		this.value += keyClickedValue;
-            	}else{
-            		this.value += " " + keyClickedValue + " ";
+            if (keyClickedValue !== '.') {
+                // write again..considering no opperator should come after opperator except -
+                if(keyClickedValue === '-' && this.value.lastIndexOf(' ') === this.value.length-1){
+                    this.value += keyClickedValue;
+            	}else {
+                    debugger;
+                    var v = this.value[this.value.length - 2];
+                    if(v !== undefined){
+                        if(isFinite(v)){
+                            this.value += " " + keyClickedValue + " ";
+                        }
+                    }else{
+                        this.value += " " + keyClickedValue + " ";
+                    }
             	}
             } else {
                 this.value += keyClickedValue;
@@ -100,4 +109,14 @@ CalculatorController.prototype.setValue = function (event) {
         }
     }
     this.displayPanel.setValue(this.value);
+};
+
+CalculatorController.prototype.editValue = function (event) {
+    var value = this.value;
+    if(value){
+        this.value = value.substring(0, value.length - 1);
+    }else{
+        value = 0;
+    }
+    this.displayPanel.setValue(value);
 };
