@@ -7,7 +7,7 @@ ButtonPanelModel.prototype.initialize = function (options){
 
     this.attributes = {
         'numbers' : {
-            'row1' : [0, 1, 2, 3],
+            'row1' : [0, 1, 2, 3],      // decide it in CSS
             'row2' : [4, 5 , 6, 7],
             'row3' : [8, 9, '.']
         },
