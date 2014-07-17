@@ -5,16 +5,14 @@ function DisplayPanelView(options){
 }
 
 DisplayPanelView.prototype.initialize = function (options) {
-    this.options = options;
-    this.$el = options.el;
-    this.render();
+    this.render(options);
 };
 
-DisplayPanelView.prototype.render = function () {
-    this.defaultDisplayValue = this.options.displayPanelModel['attributes']['defaultValue'];
+DisplayPanelView.prototype.render = function render(options) {
+    this.defaultDisplayValue = options.displayPanelModel['attributes']['defaultValue'];
     this.displayPanelBand = createElement('input','js-display-band theme-display-band',this.defaultDisplayValue);
     this.displayPanelBand.setAttribute('readonly', 'readonly');
-    this.$el.appendChild(this.displayPanelBand);
+    options.el.appendChild(this.displayPanelBand);
 };
 
 DisplayPanelView.prototype.setValue = function (value) {

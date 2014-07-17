@@ -3,20 +3,17 @@ function CalculatorView(options) {
 }
 
 CalculatorView.prototype.initialize = function (options){
-    this.options = options;
-    this.$el = document.getElementsByClassName(this.options.el)[0];
-    this.render();
+    this.render(options);
 };
 
 // create divisions for display panel and button panel
-CalculatorView.prototype.render = function () {
-
-    var displayPanelContainerClass = this.options.displayPanelClass
+CalculatorView.prototype.render = function (options) {
+    var calculatorContainer = document.getElementsByClassName(options.el)[0]
+    var displayPanelContainerClass = options.displayPanelClass
     var displayPanelContainer = createElement('div',displayPanelContainerClass);
-    this.$el.appendChild(displayPanelContainer);
+    calculatorContainer.appendChild(displayPanelContainer);
 
-    var buttonPanelContainerClass = this.options.buttonPanelClass;
+    var buttonPanelContainerClass = options.buttonPanelClass;
     var buttonPanelContainer = createElement('div', buttonPanelContainerClass);
-    this.$el.appendChild(buttonPanelContainer);
-
+    calculatorContainer.appendChild(buttonPanelContainer);
 };

@@ -3,11 +3,11 @@
 function createElement(tagName, className, text){
     var element = document.createElement(tagName);
 
-    if (className !== 'undefined') {
+    if (typeof className !== 'undefined') {
         element.className = className;
     }
 
-    if (text !== undefined) {
+    if (typeof text !== 'undefined') {
         element.appendChild(document.createTextNode(text));
     }
     return element;

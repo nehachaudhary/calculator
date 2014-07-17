@@ -37,13 +37,14 @@ CalculatorController.prototype.addEventListener = function(){
 };
 
 CalculatorController.prototype.resetDisplay= function () {
-	this.value = undefined;
-	this.displayPanel.setValue(0);
+	this.calculatorModel.resetValue();
+	this.displayPanel.setValue(this.calculatorModel.attributes.value);
 };
 
 CalculatorController.prototype.calculate= function () {
-	if(this.value){
-		var dataToEvaluate = this.value;
+    var value = this.calculatorModel.attributes.value;
+	if(value){
+		var dataToEvaluate = value;
 		var operatorPrecedenceArray = ['/', '*', '+', '-'];
 		var expression = dataToEvaluate.split(' ');
 		var i = 0;
@@ -67,7 +68,7 @@ CalculatorController.prototype.calculate= function () {
 				}
 			}
 		}
-		this.value = undefined;
+		this.calculatorModel.resetValue();
 		this.evaluatedValue = isFinite(expression[0]) ? parseFloat(expression[0]) : 'Error !';
 		this.displayPanel.setValue(this.evaluatedValue);
 	}else{
@@ -78,43 +79,42 @@ CalculatorController.prototype.calculate= function () {
 
 CalculatorController.prototype.setValue = function (event) {
     var keyClickedValue = event.currentTarget.innerText;
-    if(!this.value){
-        this.value = keyClickedValue;
+    var value = this.calculatorModel.attributes.value;
+    if(!value){
+        this.calculatorModel.attributes.value = keyClickedValue;
     }else{
         if(isFinite(keyClickedValue)){
-            if (this.value === '0' || this.value === 'Error !') {
-                this.value = keyClickedValue;
+            if (value === '0' || value === 'Error !') {
+                this.calculatorModel.attributes.value = keyClickedValue;
             } else {
-                this.value += keyClickedValue;
+                this.calculatorModel.attributes.value += keyClickedValue;
             }
         }else{
             if (keyClickedValue !== '.') {
-                // write again..considering no opperator should come after opperator except -
-                if(keyClickedValue === '-' && this.value.lastIndexOf(' ') === this.value.length-1){
-                    this.value += keyClickedValue;
+                if(keyClickedValue === '-' && value.lastIndexOf(' ') === value.length-1){
+                    this.calculatorModel.attributes.value += keyClickedValue;
             	}else {
-                    debugger;
-                    var v = this.value[this.value.length - 2];
+                    var v = value[value.length - 2];
                     if(v !== undefined){
                         if(isFinite(v)){
-                            this.value += " " + keyClickedValue + " ";
+                            this.calculatorModel.attributes.value += " " + keyClickedValue + " ";
                         }
                     }else{
-                        this.value += " " + keyClickedValue + " ";
+                        this.calculatorModel.attributes.value += " " + keyClickedValue + " ";
                     }
             	}
             } else {
-                this.value += keyClickedValue;
+                this.calculatorModel.attributes.value += keyClickedValue;
             }
         }
     }
-    this.displayPanel.setValue(this.value);
+    this.displayPanel.setValue(this.calculatorModel.attributes.value);
 };
 
 CalculatorController.prototype.editValue = function (event) {
-    var value = this.value;
+    var value = this.calculatorModel.attributes.value;
     if(value){
-        this.value = value.substring(0, value.length - 1);
+        this.calculatorModel.attributes.value = value.substring(0, value.length - 1);
     }else{
         value = 0;
     }
