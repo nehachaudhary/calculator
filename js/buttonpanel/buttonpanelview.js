@@ -11,26 +11,23 @@ function createButtonPanelTemplate(buttonPanelData){
 
     for(var key in buttonPanelData){
         if(buttonPanelData.hasOwnProperty(key)){
+            var rowDiv = createElement('div','js-button-panel-operator-row');
             if(key === 'numbers'){
                 var buttonPanelNumbers = buttonPanelData['numbers'];
-                for(var row in buttonPanelNumbers){
-                    if(buttonPanelNumbers.hasOwnProperty(row)){
-                        var rowDiv = createElement('div','js-button-panel-number-row');
-                        var rowData = buttonPanelNumbers[row];
-                        createButtonPanelElements(rowDiv, rowData);
-                    }
+                for(var index = 0; index < buttonPanelNumbers.length; index++){
+                    var element = createElement('button', 'js-input-key theme-button', buttonPanelNumbers[index]);
+                    rowDiv.appendChild(element);
                 }
+                containerDiv.appendChild(rowDiv);
             } else if (key === 'operators') {
-                var rowDiv = createElement('div','js-button-panel-operator-row');
                 createButtonPanelElements(rowDiv, buttonPanelData[key]);
             }else if(key === 'special'){
-                var rowDiv = createElement('div','js-button-panel-special-row');
-                containerDiv.appendChild(rowDiv);
                 var specialKeys = buttonPanelData[key];
                 for(var i = 0; i < specialKeys.length; i++){
                     var element = createElement('button', 'js-' + specialKeys[i] + '-key theme-button', specialKeys[i]);
                     rowDiv.appendChild(element);
                 }
+                containerDiv.appendChild(rowDiv);
             }
         }
     }

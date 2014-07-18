@@ -25,7 +25,8 @@ CalculatorController.prototype.initializePanels = function() {
 
     this.buttonPanel = new ButtonPanelController();
     this.buttonPanel.initialize({
-        el: document.getElementsByClassName('js-button-panel')[0]
+        el: document.getElementsByClassName('js-button-panel')[0],
+        buttonData : getButtonData()
     });
 };
 
